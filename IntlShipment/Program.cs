@@ -1,5 +1,9 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using IntlShipment.Data;
+using IntlShipment.Models;
 using IntlShipment.Services;
+using IntlShipment.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -35,8 +39,10 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddScoped<IShipmentService, ShipmentService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddScoped<IValidator<Shipment>, ShipmentValidator>();
 
 // Add services to the container.
 
